@@ -76,11 +76,8 @@ class Atom(object):
         if not cleaned:
             PL_unregister_atom(self.handle)
 
-    def get_value(self):
-        ret = self.chars
-        if not isinstance(ret, str):
-            ret = ret.decode()
-        return ret
+     def get_value(self):
+         return ''.join([chr(x) for x in self.chars]
 
     value = property(get_value)
 

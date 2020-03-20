@@ -1,0 +1,34 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+trigger:
+- master
+pool:
+  vmImage: 'ubuntu-latest'
+strategy:
+  matrix:
+    Python37:
+      python.version: '3.7'
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+  displayName: 'Use Python $(python.version)'
+- task: PipAuthenticate@1
+  inputs:
+    artifactFeeds: 'belmont-internal'
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+- script: |
+    python setup.py bdist_wheel
+  displayName: 'Build the wheel'
+- task: TwineAuthenticate@0
+  inputs:
+    artifactFeeds: 'belmont-internal'
+  displayName: 'Authenticate twine'
+- script: |
+    twine upload -r belmont-internal --config-file $(PYPIRC_PATH) dist/*
+  displayName: 'Upload new package'

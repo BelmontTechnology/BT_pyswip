@@ -21,6 +21,7 @@ steps:
 - script: |
     python -m pip install --upgrade pip
     pip install -r requirements.txt
+    pip install wheel twine setuptools pkginfo
   displayName: 'Install dependencies'
 - script: |
     python setup.py bdist_wheel
@@ -32,3 +33,4 @@ steps:
 - script: |
     twine upload -r belmont-internal --config-file $(PYPIRC_PATH) dist/*
   displayName: 'Upload new package'
+

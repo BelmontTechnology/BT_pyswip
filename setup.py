@@ -32,7 +32,7 @@ with io.open("README.md", encoding="utf-8") as f:
 
 
 setup(name="pyswip",
-      version="0.2.9c",
+      version="0.2.10",
       url="https://github.com/yuce/pyswip",
       download_url="https://github.com/yuce/pyswip/releases",
       author="Yuce Tekol",
